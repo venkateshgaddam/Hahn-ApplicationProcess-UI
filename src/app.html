@@ -1,0 +1,79 @@
+<template>
+  <require from="bootstrap/dist/css/bootstrap.css"></require>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <nav class="navbar navbar-expand-md navbar-dark bg-info mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Hahn Application Process</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+        aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li repeat.for="row of router.navigation" class="nav-item active">
+            <a class="nav-link" href.bind="row.href">${row.title}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <router-view></router-view>
+  <main class="container">
+    <div class="bg-light p-5 rounded">
+      <ul if.bind="controller.errors.length>0">
+        <li repeat.for="error of controller.errors" style="text-transform: capitalize; color: red;">
+          ${error.message}
+        </li>
+      </ul>
+      <form role="form" submit.delegate="SubmitApplicantData()">
+        <div class="row">
+          <div class="mb-3 col-lg-4">
+            <label for="txtName" class="form-label">Name</label>
+            <input type="text" id="txtName" class='form-control' style.bind="errorStyles.NameStyle"
+              value.bind="applicantData.Name & validate" placeholder="Enter your Name" focusout.delegate="action('Name')">
+          </div>
+          <div class="mb-3 col-lg-4">
+            <label for="txtFamilyName" class="form-label">FamilyName</label>
+            <input type="text" class="form-control" id="txtFamilyName" style.bind="errorStyles.FamilyNameStyle"
+              value.bind="applicantData.FamilyName & validate" placeholder="Enter your Family Name"
+              focusout.delegate="action('FamilyName')">
+          </div>
+
+          <div class="mb-3 col-md-4">
+            <label for="txtCountry" class="form-label">Country of Origin</label>
+            <input type="text" class="form-control" id="txtCountry" style.bind="errorStyles.CountryOfOriginstyle"
+              value.bind="applicantData.CountryOfOrigin & validate" placeholder="Country" focusout.delegate="action('CountryofOrigin')">
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-4">
+            <label for="txtAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" id="txtAddress" style.bind="errorStyles.AddressStyle"
+              value.bind="applicantData.Address & validate" placeholder="Address" focusout.delegate="action('Address')">
+          </div>
+          <div class="mb-3 col-md-4 has-validation">
+            <label for="txtEmail" class="form-label">Email</label>
+            <input type="text" class="form-control" id="txtEmail" style.bind="errorStyles.EmailAddressStyle"
+              value.bind="applicantData.EmailAddress & validate" placeholder="Email Address" focusout.delegate="action('EmailAddress')">
+          </div>
+          <div class="mb-3 col-md-4">
+            <label for="txtAge" class="form-label">Age</label>
+            <input type="text" class="form-control" id="txtAge" style.bind="errorStyles.AgeStyle" value.bind="applicantData.Age & validate"
+              placeholder="applicantData.Age" focusout.delegate="action('Age')">
+          </div>
+        </div>
+        <div class="mb-3 col-md-4">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="swHired" checked.bind="applicantData.Hired">
+            <label class="form-check-label" for="swHired">Is the Applicant Hired</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" disabled.bind="!enableSubmitButton">SendData</button>
+        <button type="reset" class="btn btn-secondary btn-lg" disabled.bind="!enableResetButton"
+          click.delegate="reset()">Reset</button>
+      </form>
+
+    </div>
+  </main>
+
+</template>

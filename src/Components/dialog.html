@@ -1,0 +1,23 @@
+<template>
+    <require from="bootstrap/dist/css/bootstrap.css"></require>
+    <style>
+        div.div {
+            border: 1px solid blue;
+            padding: 15px;
+            justify-content: center;
+        }
+    </style>
+
+    <div>
+        <ux-dialog style="margin-top: 100%;">
+            <ux-dialog-body style="width: 300%;">
+                <h3>${message}</h3>
+            </ux-dialog-body>
+
+            <ux-dialog-footer>
+                <button click.trigger="controller.cancel()">Cancel</button>
+                <button class="btn btn-primary" click.trigger="controller.ok(person)">Ok</button>
+            </ux-dialog-footer>
+        </ux-dialog>
+    </div>
+</template>
